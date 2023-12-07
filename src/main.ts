@@ -57,7 +57,7 @@ if (process.env.NO_CRAWL !== "true") {
   });
 
   // Add first URL to the queue and start the crawl.
-  await crawler.run([config.url]);
+  await crawler.run(Array.isArray(config.url) ? config.url : [config.url]);
 }
 
 const jsonFiles = await glob("storage/datasets/default/*.json", {
