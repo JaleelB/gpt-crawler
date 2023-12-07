@@ -18,13 +18,12 @@ if (process.env.NO_CRAWL !== "true") {
   const crawler = new PlaywrightCrawler({
     // Use the requestHandler to process each of the crawled pages.
     async requestHandler({ request, page, enqueueLinks, log, pushData }) {
-
       if (config.cookie) {
         // Set the cookie for the specific URL
         const cookie = {
           name: config.cookie.name,
           value: config.cookie.value,
-          url: request.loadedUrl, 
+          url: request.loadedUrl,
         };
         await page.context().addCookies([cookie]);
       }
@@ -48,7 +47,7 @@ if (process.env.NO_CRAWL !== "true") {
       // Extract links from the current page
       // and add them to the crawling queue.
       await enqueueLinks({
-        globs: [config.match],
+        globs: typeof config.match === "string" ? [config.match] : config.match,
       });
     },
     // Comment this option to scrape the full website.
